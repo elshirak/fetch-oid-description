@@ -1,0 +1,508 @@
+OID: 1.3.6.1.2.1.1.1
+Name: sysDescr(1)
+Description: sysDescr OBJECT-TYPE  SYNTAX DisplayString (SIZE (0..255))  MAX-ACCESS read-only  STATUS current  DESCRIPTION  "A textual description of the entity. This value should  include the full name and version identification of  the system's hardware type, software operating-system,  and networking software."
+----------------------------------------
+OID: 1.3.6.1.2.1.1.2
+Name: sysObjectID(2)
+Description: sysObjectID OBJECT-TYPE  SYNTAX OBJECT IDENTIFIER  MAX-ACCESS read-only  STATUS current  DESCRIPTION  "The vendor's authoritative identification of the  network management subsystem contained in the entity.  This value is allocated within the SMI enterprises  subtree (1.3.6.1.4.1) and provides an easy and  unambiguous means for determining `what kind of box' is  being managed. For example, if vendor `Flintstones,  Inc.' was assigned the subtree 1.3.6.1.4.1.424242,  it could assign the identifier 1.3.6.1.4.1.424242.1.1  to its `Fred Router'."
+----------------------------------------
+OID: 1.3.6.1.2.1.1.3
+Name: sysUpTime(3)
+Description: sysUpTime OBJECT-TYPE  SYNTAX TimeTicks  MAX-ACCESS read-only  STATUS current  DESCRIPTION  "The time (in hundredths of a second) since the  network management portion of the system was last  re-initialized."
+----------------------------------------
+OID: 1.3.6.1.2.1.1.4
+Name: sysContact(4)
+Description: sysContact OBJECT-TYPE  SYNTAX DisplayString (SIZE (0..255))  MAX-ACCESS read-write  STATUS current  DESCRIPTION  "The textual identification of the contact person for  this managed node, together with information on how  to contact this person. If no contact information is  known, the value is the zero-length string."
+----------------------------------------
+OID: 1.3.6.1.2.1.1.5
+Name: sysName(5)
+Description: sysName OBJECT-TYPE  SYNTAX DisplayString (SIZE (0..255))  MAX-ACCESS read-write  STATUS current  DESCRIPTION  "An administratively-assigned name for this managed  node. By convention, this is the node's fully-qualified  domain name. If the name is unknown, the value is  the zero-length string."
+----------------------------------------
+OID: 1.3.6.1.2.1.1.6
+Name: sysLocation(6)
+Description: sysLocation OBJECT-TYPE  SYNTAX DisplayString (SIZE (0..255))  MAX-ACCESS read-write  STATUS current  DESCRIPTION  "The physical location of this node (e.g., 'telephone  closet, 3rd floor'). If the location is unknown, the  value is the zero-length string."
+----------------------------------------
+OID: 1.3.6.1.2.1.1.7
+Name: sysServices(7)
+Description: sysServices OBJECT-TYPE  SYNTAX INTEGER (0..127)  MAX-ACCESS read-only  STATUS current  DESCRIPTION  "A value which indicates the set of services that this  entity may potentially offer. The value is a sum.  This sum initially takes the value zero. Then, for  each layer, L, in the range 1 through 7, that this node  performs transactions for, 2 raised to (L - 1) is added  to the sum. For example, a node which performs only  routing functions would have a value of 4 (2^(3-1)).  In contrast, a node which is a host offering application  services would have a value of 72 (2^(4-1) + 2^(7-1)).  Note that in the context of the Internet suite of  protocols, values should be calculated accordingly:  layer functionality  1 physical (e.g., repeaters)  2 datalink/subnetwork (e.g., bridges)  3 internet (e.g., supports the IP)  4 end-to-end (e.g., supports the TCP)  7 applications (e.g., supports the SMTP)  For systems including OSI protocols, layers 5 and 6  may also be counted."
+----------------------------------------
+OID: 1.3.6.1.2.1.2.1
+Name: ifNumber(1)
+Description: ifNumber OBJECT-TYPE  SYNTAX INTEGER  ACCESS read-only  STATUS mandatory  DESCRIPTION  "The number of network interfaces (regardless of their current state) present on this system."
+----------------------------------------
+OID: 1.3.6.1.2.1.2.2.1.1
+Name: ifIndex(1)
+Description: ifIndex OBJECT-TYPE  SYNTAX InterfaceIndex  MAX-ACCESS read-only  STATUS current  DESCRIPTION  "A unique value, greater than zero, for each interface. It is recommended that values are assigned contiguously starting from 1. The value for each interface sub-layer must remain constant at least from one re-initialization of the entity's network management system to the next re-initialization."
+----------------------------------------
+OID: 1.3.6.1.2.1.2.2.1.2
+Name: ifDescr(2)
+Description: ifDescr OBJECT-TYPE  SYNTAX DisplayString (SIZE (0..255))  MAX-ACCESS read-only  STATUS current  DESCRIPTION  "A textual string containing information about theinterface. This string should include the name of the manufacturer, the product name and the version of the interface hardware/software."
+----------------------------------------
+OID: 1.3.6.1.2.1.2.2.1.3
+Name: ifType(3)
+Description: N/A
+----------------------------------------
+OID: 1.3.6.1.2.1.2.2.1.4
+Name: ifMtu(4)
+Description: ifMtu OBJECT-TYPE  SYNTAX Integer32  MAX-ACCESS read-only  STATUS current  DESCRIPTION  "The size of the largest packet which can be sent/received on the interface, specified in octets. For interfaces that are used for transmitting network datagrams, this is the size of the largest network datagram that can be sent on the interface."
+----------------------------------------
+OID: 1.3.6.1.2.1.2.2.1.5
+Name: ifSpeed(5)
+Description: ifSpeed OBJECT-TYPE  SYNTAX Gauge32  MAX-ACCESS read-only  STATUS current  DESCRIPTION  "An estimate of the interface's current bandwidth in bits  per second. For interfaces which do not vary in bandwidth  or for those where no accurate estimation can be made, this  object should contain the nominal bandwidth. If the  bandwidth of the interface is greater than the maximum value  reportable by this object then this object should report its  maximum value (4,294,967,295) and ifHighSpeed must be used  to report the interace's speed. For a sub-layer which has  no concept of bandwidth, this object should be zero."
+----------------------------------------
+OID: 1.3.6.1.2.1.2.2.1.6
+Name: ifPhysAddress(6)
+Description: ifPhysAddress OBJECT-TYPE  SYNTAX PhysAddress  MAX-ACCESS read-only  STATUS current  DESCRIPTION  "The interface's address at its protocol sub-layer. For  example, for an 802.x interface, this object normally  contains a MAC address. The interface's media-specific MIB  must define the bit and byte ordering and the format of the  value of this object. For interfaces which do not have such  an address (e.g., a serial line), this object should contain  an octet string of zero length."
+----------------------------------------
+OID: 1.3.6.1.2.1.2.2.1.7
+Name: ifAdminStatus(7)
+Description: ifAdminStatus OBJECT-TYPE  SYNTAX INTEGER {  up(1), -- ready to pass packets  down(2),  testing(3) -- in some test mode  }  MAX-ACCESS read-write  STATUS current  DESCRIPTION  "The desired state of the interface. The testing(3) state  indicates that no operational packets can be passed. When a  managed system initializes, all interfaces start with  ifAdminStatus in the down(2) state. As a result of either  explicit management action or per configuration information  retained by the managed system, ifAdminStatus is then  changed to either the up(1) or testing(3) states (or remains  in the down(2) state)."
+----------------------------------------
+OID: 1.3.6.1.2.1.2.2.1.8
+Name: ifOperStatus(8)
+Description: ifOperStatus OBJECT-TYPE  SYNTAX INTEGER {  up(1), -- ready to pass packets  down(2),  testing(3), -- in some test mode  unknown(4), -- status can not be determined  -- for some reason.  dormant(5),  notPresent(6), -- some component is missing  lowerLayerDown(7) -- down due to state of  -- lower-layer interface(s)  }  MAX-ACCESS read-only  STATUS current  DESCRIPTION  "The current operational state of the interface. The  testing(3) state indicates that no operational packets can  be passed. If ifAdminStatus is down(2) then ifOperStatus  should be down(2). If ifAdminStatus is changed to up(1)  then ifOperStatus should change to up(1) if the interface is  ready to transmit and receive network traffic; it should  change to dormant(5) if the interface is waiting for  external actions (such as a serial line waiting for an  incoming connection); it should remain in the down(2) state  if and only if there is a fault that prevents it from going  to the up(1) state; it should remain in the notPresent(6)  state if the interface has missing (typically, hardware)  components."
+----------------------------------------
+OID: 1.3.6.1.2.1.2.2.1.9
+Name: ifLastChange(9)
+Description: ifLastChange OBJECT-TYPE  SYNTAX TimeTicks  MAX-ACCESS read-only  STATUS current  DESCRIPTION  "The value of sysUpTime at the time the interface entered  its current operational state. If the current state was  entered prior to the last re-initialization of the local  network management subsystem, then this object contains a  zero value."
+----------------------------------------
+OID: 1.3.6.1.2.1.2.2.1.10
+Name: ifInOctets(10)
+Description: ifInOctets OBJECT-TYPE  SYNTAX Counter32  MAX-ACCESS read-only  STATUS current  DESCRIPTION  "The total number of octets received on the interface,  including framing characters.  Discontinuities in the value of this counter can occur at  re-initialization of the management system, and at other  times as indicated by the value of  ifCounterDiscontinuityTime."
+----------------------------------------
+OID: 1.3.6.1.2.1.2.2.1.11
+Name: ifInUcastPkts(11)
+Description: ifInUcastPkts OBJECT-TYPE  SYNTAX Counter32  MAX-ACCESS read-only  STATUS current  DESCRIPTION  "The number of packets, delivered by this sub-layer to a  higher (sub-)layer, which were not addressed to a multicast  or broadcast address at this sub-layer.  Discontinuities in the value of this counter can occur at  re-initialization of the management system, and at other  times as indicated by the value of  ifCounterDiscontinuityTime."
+----------------------------------------
+OID: 1.3.6.1.2.1.2.2.1.12
+Name: ifInNUcastPkts(12)
+Description: ifInNUcastPkts OBJECT-TYPE  SYNTAX Counter32  MAX-ACCESS read-only  STATUS deprecated  DESCRIPTION  "The number of packets, delivered by this sub-layer to a  higher (sub-)layer, which were addressed to a multicast or  broadcast address at this sub-layer.  Discontinuities in the value of this counter can occur at  re-initialization of the management system, and at other  times as indicated by the value of  ifCounterDiscontinuityTime.  This object is deprecated in favour of ifInMulticastPkts and  ifInBroadcastPkts."
+----------------------------------------
+OID: 1.3.6.1.2.1.2.2.1.13
+Name: ifInDiscards(13)
+Description: ifInDiscards OBJECT-TYPE  SYNTAX Counter32  MAX-ACCESS read-only  STATUS current  DESCRIPTION  "The number of inbound packets which were chosen to be  discarded even though no errors had been detected to prevent  their being deliverable to a higher-layer protocol. One  possible reason for discarding such a packet could be to  free up buffer space.  Discontinuities in the value of this counter can occur at  re-initialization of the management system, and at other  times as indicated by the value of  ifCounterDiscontinuityTime."
+----------------------------------------
+OID: 1.3.6.1.2.1.2.2.1.14
+Name: ifInErrors(14)
+Description: ifInErrors OBJECT-TYPE  SYNTAX Counter32  MAX-ACCESS read-only  STATUS current  DESCRIPTION  "For packet-oriented interfaces, the number of inbound  packets that contained errors preventing them from being  deliverable to a higher-layer protocol. For character-  oriented or fixed-length interfaces, the number of inbound  transmission units that contained errors preventing them  from being deliverable to a higher-layer protocol.  Discontinuities in the value of this counter can occur at  re-initialization of the management system, and at other  times as indicated by the value of  ifCounterDiscontinuityTime."
+----------------------------------------
+OID: 1.3.6.1.2.1.2.2.1.15
+Name: ifInUnknownProtos(15)
+Description: ifInUnknownProtos OBJECT-TYPE  SYNTAX Counter32  MAX-ACCESS read-only  STATUS current  DESCRIPTION  "For packet-oriented interfaces, the number of packets  received via the interface which were discarded because of  an unknown or unsupported protocol. For character-oriented  or fixed-length interfaces that support protocol  multiplexing the number of transmission units received via  the interface which were discarded because of an unknown or  unsupported protocol. For any interface that does not  support protocol multiplexing, this counter will always be  0.  Discontinuities in the value of this counter can occur at  re-initialization of the management system, and at other  times as indicated by the value of  ifCounterDiscontinuityTime."
+----------------------------------------
+OID: 1.3.6.1.2.1.2.2.1.16
+Name: ifOutOctets(16)
+Description: ifOutOctets OBJECT-TYPE  SYNTAX Counter32  MAX-ACCESS read-only  STATUS current  DESCRIPTION  "The total number of octets transmitted out of the  interface, including framing characters.  Discontinuities in the value of this counter can occur at  re-initialization of the management system, and at other  times as indicated by the value of  ifCounterDiscontinuityTime."
+----------------------------------------
+OID: 1.3.6.1.2.1.2.2.1.17
+Name: ifOutUcastPkts(17)
+Description: ifOutUcastPkts OBJECT-TYPE  SYNTAX Counter32  MAX-ACCESS read-only  STATUS current  DESCRIPTION  "The total number of packets that higher-level protocols  requested be transmitted, and which were not addressed to a  multicast or broadcast address at this sub-layer, including  those that were discarded or not sent.  Discontinuities in the value of this counter can occur at  re-initialization of the management system, and at other  times as indicated by the value of  ifCounterDiscontinuityTime."
+----------------------------------------
+OID: 1.3.6.1.2.1.2.2.1.18
+Name: ifOutNUcastPkts(18)
+Description: ifOutNUcastPkts OBJECT-TYPE  SYNTAX Counter32  MAX-ACCESS read-only  STATUS deprecated  DESCRIPTION  "The total number of packets that higher-level protocols  requested be transmitted, and which were addressed to a  multicast or broadcast address at this sub-layer, including  those that were discarded or not sent.  Discontinuities in the value of this counter can occur at  re-initialization of the management system, and at other  times as indicated by the value of  ifCounterDiscontinuityTime.  This object is deprecated in favour of ifOutMulticastPkts  and ifOutBroadcastPkts."
+----------------------------------------
+OID: 1.3.6.1.2.1.2.2.1.19
+Name: ifOutDiscards(19)
+Description: ifOutDiscards OBJECT-TYPE  SYNTAX Counter32  MAX-ACCESS read-only  STATUS current  DESCRIPTION  "The number of outbound packets which were chosen to be  discarded even though no errors had been detected to prevent  their being transmitted. One possible reason for discarding  such a packet could be to free up buffer space.  Discontinuities in the value of this counter can occur at  re-initialization of the management system, and at other  times as indicated by the value of  ifCounterDiscontinuityTime."
+----------------------------------------
+OID: 1.3.6.1.2.1.2.2.1.20
+Name: ifOutErrors(20)
+Description: ifOutErrors OBJECT-TYPE  SYNTAX Counter32  MAX-ACCESS read-only  STATUS current  DESCRIPTION  "For packet-oriented interfaces, the number of outbound  packets that could not be transmitted because of errors.  For character-oriented or fixed-length interfaces, the  number of outbound transmission units that could not be  transmitted because of errors.  Discontinuities in the value of this counter can occur at  re-initialization of the management system, and at other  times as indicated by the value of  ifCounterDiscontinuityTime."
+----------------------------------------
+OID: 1.3.6.1.2.1.2.2.1.21
+Name: ifOutQLen(21)
+Description: ifOutQLen OBJECT-TYPE  SYNTAX Gauge32  MAX-ACCESS read-only  STATUS deprecated  DESCRIPTION  "The length of the output packet queue (in packets)."
+----------------------------------------
+OID: 1.3.6.1.2.1.2.2.1.22
+Name: ifSpecific(22)
+Description: ifSpecific OBJECT-TYPE  SYNTAX OBJECT IDENTIFIER  MAX-ACCESS read-only  STATUS deprecated  DESCRIPTION  "A reference to MIB definitions specific to the particular  media being used to realize the interface. It is  recommended that this value point to an instance of a MIB  object in the media-specific MIB, i.e., that this object  have the semantics associated with the InstancePointer  textual convention defined in RFC 2579. In fact, it is  recommended that the media-specific MIB specify what value  ifSpecific should/can take for values of ifType. If no MIB  definitions specific to the particular media are available,  the value should be set to the OBJECT IDENTIFIER { 0 0 }."
+----------------------------------------
+OID: 1.3.6.1.2.1.4.1
+Name: ipForwarding(1)
+Description: ipForwarding OBJECT-TYPE  SYNTAX INTEGER {  forwarding(1), -- acting as a router  notForwarding(2) -- NOT acting as a router  }  MAX-ACCESS read-write  STATUS current  DESCRIPTION  "The indication of whether this entity is acting as an IPv4  router in respect to the forwarding of datagrams received  by, but not addressed to, this entity. IPv4 routers forward  datagrams. IPv4 hosts do not (except those source-routed  via the host).  When this object is written, the entity should save the  change to non-volatile storage and restore the object from  non-volatile storage upon re-initialization of the system.  Note: a stronger requirement is not used because this object  was previously defined."
+----------------------------------------
+OID: 1.3.6.1.2.1.4.20.1.1
+Name: ipAdEntAddr(1)
+Description: ipAdEntAddr OBJECT-TYPE  SYNTAX IpAddress  MAX-ACCESS read-only  STATUS deprecated  DESCRIPTION  "The IPv4 address to which this entry's addressing  information pertains."
+----------------------------------------
+OID: 1.3.6.1.2.1.4.20.1.2
+Name: ipAdEntIfIndex(2)
+Description: ipAdEntIfIndex OBJECT-TYPE  SYNTAX INTEGER (1..2147483647)  MAX-ACCESS read-only  STATUS deprecated  DESCRIPTION  "The index value which uniquely identifies the interface to  which this entry is applicable. The interface identified by  a particular value of this index is the same interface as  identified by the same value of the IF-MIB's ifIndex."
+----------------------------------------
+OID: 1.3.6.1.2.1.4.20.1.3
+Name: ipAdEntNetMask(3)
+Description: ipAdEntNetMask OBJECT-TYPE  SYNTAX IpAddress  MAX-ACCESS read-only  STATUS deprecated  DESCRIPTION  "The subnet mask associated with the IPv4 address of this  entry. The value of the mask is an IPv4 address with all  the network bits set to 1 and all the hosts bits set to 0."
+----------------------------------------
+OID: 1.3.6.1.2.1.4.20.1.4
+Name: ipAdEntBcastAddr(4)
+Description: ipAdEntBcastAddr OBJECT-TYPE  SYNTAX INTEGER (0..1)  MAX-ACCESS read-only  STATUS deprecated  DESCRIPTION  "The value of the least-significant bit in the IPv4 broadcast  address used for sending datagrams on the (logical)  interface associated with the IPv4 address of this entry.  For example, when the Internet standard all-ones broadcast  address is used, the value will be 1. This value applies to  both the subnet and network broadcast addresses used by the  entity on this (logical) interface."
+----------------------------------------
+OID: 1.3.6.1.2.1.4.20.1.5
+Name: ipAdEntReasmMaxSize(5)
+Description: ipAdEntReasmMaxSize OBJECT-TYPE  SYNTAX INTEGER (0..65535)  MAX-ACCESS read-only  STATUS deprecated  DESCRIPTION  "The size of the largest IPv4 datagram which this entity can  re-assemble from incoming IPv4 fragmented datagrams received  on this interface."
+----------------------------------------
+OID: 1.3.6.1.2.1.4.24.6
+Name: inetCidrRouteNumber(6)
+Description: inetCidrRouteNumber OBJECT-TYPE  SYNTAX Gauge32  MAX-ACCESS read-only  STATUS current  DESCRIPTION  "The number of current inetCidrRouteTable entries that  are not invalid."
+----------------------------------------
+OID: 1.3.6.1.2.1.4.30.1.1
+Name: ipv6InterfaceIfIndex(1)
+Description: ipv6InterfaceIfIndex OBJECT-TYPE  SYNTAX InterfaceIndex  MAX-ACCESS not-accessible  STATUS current  DESCRIPTION  "The index value that uniquely identifies the interface to  which this entry is applicable. The interface identified by  a particular value of this index is the same interface as  identified by the same value of the IF-MIB's ifIndex."
+----------------------------------------
+OID: 1.3.6.1.2.1.4.30.1.2
+Name: N/A
+Description: ipv6InterfaceReasmMaxSize OBJECT-TYPE  SYNTAX Unsigned32 (1500..65535)  UNITS "octets"  MAX-ACCESS read-only  STATUS current  DESCRIPTION  "The size of the largest IPv6 datagram that this entity can  re-assemble from incoming IPv6 fragmented datagrams received  on this interface."
+----------------------------------------
+OID: 1.3.6.1.2.1.4.30.1.3
+Name: N/A
+Description: ipv6InterfaceIdentifier OBJECT-TYPE  SYNTAX Ipv6AddressIfIdentifierTC  MAX-ACCESS read-only  STATUS current  DESCRIPTION  "The Interface Identifier for this interface. The Interface  Identifier is combined with an address prefix to form an  interface address.  By default, the Interface Identifier is auto-configured  according to the rules of the link type to which this  interface is attached.  A zero length identifier may be used where appropriate. One  possible example is a loopback interface."
+----------------------------------------
+OID: 1.3.6.1.2.1.4.30.1.5
+Name: N/A
+Description: ipv6InterfaceEnableStatus OBJECT-TYPE  SYNTAX INTEGER {  up(1),  down(2)  }  MAX-ACCESS read-write  STATUS current  DESCRIPTION  "The indication of whether IPv6 is enabled (up) or disabled  (down) on this interface. This object does not affect the  state of the interface itself, only its connection to an  IPv6 stack. The IF-MIB should be used to control the state  of the interface.  When this object is written, the entity SHOULD save the  change to non-volatile storage and restore the object from  non-volatile storage upon re-initialization of the system."
+----------------------------------------
+OID: 1.3.6.1.2.1.4.30.1.6
+Name: N/A
+Description: ipv6InterfaceReachableTime OBJECT-TYPE  SYNTAX Unsigned32  UNITS "milliseconds"  MAX-ACCESS read-only  STATUS current  DESCRIPTION  "The time a neighbor is considered reachable after receiving  a reachability confirmation."  REFERENCE "RFC 2461, Section 6.3.2"
+----------------------------------------
+OID: 1.3.6.1.2.1.4.30.1.7
+Name: N/A
+Description: ipv6InterfaceRetransmitTime OBJECT-TYPE  SYNTAX Unsigned32  UNITS "milliseconds"  MAX-ACCESS read-only  STATUS current  DESCRIPTION  "The time between retransmissions of Neighbor Solicitation  messages to a neighbor when resolving the address or when  probing the reachability of a neighbor."  REFERENCE "RFC 2461, Section 6.3.2"
+----------------------------------------
+OID: 1.3.6.1.2.1.4.30.1.8
+Name: N/A
+Description: ipv6InterfaceForwarding OBJECT-TYPE  SYNTAX INTEGER {  forwarding(1), -- acting as a router  notForwarding(2) -- NOT acting as a router  }  MAX-ACCESS read-write  STATUS current  DESCRIPTION  "The indication of whether this entity is acting as an IPv6  router on this interface with respect to the forwarding of  datagrams received by, but not addressed to, this entity.  IPv6 routers forward datagrams. IPv6 hosts do not (except  those source-routed via the host).  This object is constrained by ipv6IpForwarding and is  ignored if ipv6IpForwarding is set to notForwarding. Those  systems that do not provide per-interface control of the  forwarding function should set this object to forwarding for  all interfaces and allow the ipv6IpForwarding object to  control the forwarding capability.  When this object is written, the entity SHOULD save the  change to non-volatile storage and restore the object from  non-volatile storage upon re-initialization of the system."
+----------------------------------------
+OID: 1.3.6.1.2.1.4.34.1.1
+Name: ipAddressAddrType(1)
+Description: ipAddressAddrType OBJECT-TYPE  SYNTAX InetAddressType  MAX-ACCESS not-accessible  STATUS current  DESCRIPTION  "The address type of ipAddressAddr."
+----------------------------------------
+OID: 1.3.6.1.2.1.4.34.1.2
+Name: ipAddressAddr(2)
+Description: ipAddressAddr OBJECT-TYPE  SYNTAX InetAddress  MAX-ACCESS not-accessible  STATUS current  DESCRIPTION  "The IP address to which this entry's addressing information  pertains. The address type of this object is specified in  ipAddressAddrType.  Implementors need to be aware that if the size of  ipAddressAddr exceeds 116 octets, then OIDS of instances of  columns in this row will have more than 128 sub-identifiers  and cannot be accessed using SNMPv1, SNMPv2c, or SNMPv3."
+----------------------------------------
+OID: 1.3.6.1.2.1.4.34.1.3
+Name: ipAddressIfIndex(3)
+Description: ipAddressIfIndex OBJECT-TYPE  SYNTAX InterfaceIndex  MAX-ACCESS read-create  STATUS current  DESCRIPTION  "The index value that uniquely identifies the interface to  which this entry is applicable. The interface identified by  a particular value of this index is the same interface as  identified by the same value of the IF-MIB's ifIndex."
+----------------------------------------
+OID: 1.3.6.1.2.1.4.34.1.4
+Name: ipAddressType(4)
+Description: ipAddressType OBJECT-TYPE  SYNTAX INTEGER {  unicast(1), anycast(2), broadcast(3) }  MAX-ACCESS read-create  STATUS current  DESCRIPTION  "The type of address. broadcast(3) is not a valid value for  IPv6 addresses (RFC 3513)."  DEFVAL { unicast }
+----------------------------------------
+OID: 1.3.6.1.2.1.4.34.1.5
+Name: ipAddressPrefix(5)
+Description: ipAddressPrefix OBJECT-TYPE  SYNTAX RowPointer  MAX-ACCESS read-only  STATUS current  DESCRIPTION  "A pointer to the row in the prefix table to which this  address belongs. May be { 0 0 } if there is no such row."  DEFVAL { zeroDotZero }
+----------------------------------------
+OID: 1.3.6.1.2.1.4.34.1.6
+Name: ipAddressOrigin(6)
+Description: ipAddressOrigin OBJECT-TYPE  SYNTAX IpAddressOriginTC  MAX-ACCESS read-only  STATUS current  DESCRIPTION  "The origin of the address."
+----------------------------------------
+OID: 1.3.6.1.2.1.4.34.1.7
+Name: ipAddressStatus(7)
+Description: ipAddressStatus OBJECT-TYPE  SYNTAX IpAddressStatusTC  MAX-ACCESS read-create  STATUS current  DESCRIPTION  "The status of the address, describing if the address can be  used for communication.  In the absence of other information, an IPv4 address is  always preferred(1)."  DEFVAL { preferred }
+----------------------------------------
+OID: 1.3.6.1.2.1.4.34.1.8
+Name: ipAddressCreated(8)
+Description: ipAddressCreated OBJECT-TYPE  SYNTAX TimeStamp  MAX-ACCESS read-only  STATUS current  DESCRIPTION  "The value of sysUpTime at the time this entry was created.  If this entry was created prior to the last re-  initialization of the local network management subsystem,  then this object contains a zero value."
+----------------------------------------
+OID: 1.3.6.1.2.1.4.34.1.9
+Name: ipAddressLastChanged(9)
+Description: ipAddressLastChanged OBJECT-TYPE  SYNTAX TimeStamp  MAX-ACCESS read-only  STATUS current  DESCRIPTION  "The value of sysUpTime at the time this entry was last  updated. If this entry was updated prior to the last re-  initialization of the local network management subsystem,  then this object contains a zero value."
+----------------------------------------
+OID: 1.3.6.1.2.1.4.34.1.10
+Name: ipAddressRowStatus(10)
+Description: ipAddressRowStatus OBJECT-TYPE  SYNTAX RowStatus  MAX-ACCESS read-create  STATUS current  DESCRIPTION  "The status of this conceptual row.  The RowStatus TC requires that this DESCRIPTION clause  states under which circumstances other objects in this row  can be modified. The value of this object has no effect on  whether other objects in this conceptual row can be  modified.  A conceptual row can not be made active until the  ipAddressIfIndex has been set to a valid index."
+----------------------------------------
+OID: 1.3.6.1.2.1.4.34.1.11
+Name: ipAddressStorageType(11)
+Description: ipAddressStorageType OBJECT-TYPE  SYNTAX StorageType  MAX-ACCESS read-create  STATUS current  DESCRIPTION  "The storage type for this conceptual row. If this object  has a value of 'permanent', then no other objects are  required to be able to be modified."  DEFVAL { volatile }
+----------------------------------------
+OID: 1.3.6.1.2.1.4.35.1.1
+Name: N/A
+Description: ipNetToPhysicalIfIndex OBJECT-TYPE  SYNTAX InterfaceIndex  MAX-ACCESS not-accessible  STATUS current  DESCRIPTION  "The index value that uniquely identifies the interface to  which this entry is applicable. The interface identified by  a particular value of this index is the same interface as  identified by the same value of the IF-MIB's ifIndex."
+----------------------------------------
+OID: 1.3.6.1.2.1.4.35.1.2
+Name: N/A
+Description: ipNetToPhysicalNetAddressType OBJECT-TYPE  SYNTAX InetAddressType  MAX-ACCESS not-accessible  STATUS current  DESCRIPTION  "The type of ipNetToPhysicalNetAddress."
+----------------------------------------
+OID: 1.3.6.1.2.1.4.35.1.3
+Name: N/A
+Description: ipNetToPhysicalNetAddress OBJECT-TYPE  SYNTAX InetAddress  MAX-ACCESS not-accessible  STATUS current  DESCRIPTION  "The IP Address corresponding to the media-dependent  `physical' address. The address type of this object is  specified in ipNetToPhysicalAddressType.  Implementors need to be aware that if the size of  ipNetToPhysicalNetAddress exceeds 115 octets, then OIDS of  instances of columns in this row will have more than 128  sub-identifiers and cannot be accessed using SNMPv1,  SNMPv2c, or SNMPv3."
+----------------------------------------
+OID: 1.3.6.1.2.1.4.35.1.4
+Name: N/A
+Description: ipNetToPhysicalPhysAddress OBJECT-TYPE  SYNTAX PhysAddress (SIZE(0..65535))  MAX-ACCESS read-create  STATUS current  DESCRIPTION  "The media-dependent `physical' address.  As the entries in this table are typically not persistent  when this object is written the entity SHOULD NOT save the  change to non-volatile storage."
+----------------------------------------
+OID: 1.3.6.1.2.1.4.35.1.5
+Name: N/A
+Description: ipNetToPhysicalLastUpdated OBJECT-TYPE  SYNTAX TimeStamp  MAX-ACCESS read-only  STATUS current  DESCRIPTION  "The value of sysUpTime at the time this entry was last  updated. If this entry was updated prior to the last re-  initialization of the local network management subsystem,  then this object contains a zero value."
+----------------------------------------
+OID: 1.3.6.1.2.1.4.35.1.6
+Name: ipNetToPhysicalType(6)
+Description: ipNetToPhysicalType OBJECT-TYPE  SYNTAX INTEGER {  other(1), -- none of the following  invalid(2), -- an invalidated mapping  dynamic(3),  static(4),  local(5) -- local interface  }  MAX-ACCESS read-create  STATUS current  DESCRIPTION  "The type of mapping.  Setting this object to the value invalid(2) has the effect  of invalidating the corresponding entry in the  ipNetToPhysicalTable. That is, it effectively dis-  associates the interface identified with said entry from the  mapping identified with said entry. It is an  implementation-specific matter as to whether the agent  removes an invalidated entry from the table. Accordingly,  management stations must be prepared to receive tabular  information from agents that corresponds to entries not  currently in use. Proper interpretation of such entries  requires examination of the relevant ipNetToPhysicalType  object.  The 'dynamic(3)' type indicates that the IP address to  physical addresses mapping has been dynamically resolved  using e.g., IPv4 ARP or the IPv6 Neighbor Discovery  protocol.  The 'static(4)' type indicates that the mapping has been  statically configured. Both of these refer to entries that  provide mappings for other entities addresses.  The 'local(5)' type indicates that the mapping is provided  for an entity's own interface address.  As the entries in this table are typically not persistent  when this object is written the entity SHOULD NOT save the  change to non-volatile storage."  DEFVAL { static }
+----------------------------------------
+OID: 1.3.6.1.2.1.4.35.1.7
+Name: ipNetToPhysicalState(7)
+Description: ipNetToPhysicalState OBJECT-TYPE  SYNTAX INTEGER {  reachable(1), -- confirmed reachability  stale(2), -- unconfirmed reachability  delay(3), -- waiting for reachability  -- confirmation before entering  -- the probe state  probe(4), -- actively probing  invalid(5), -- an invalidated mapping  unknown(6), -- state can not be determined  -- for some reason.  incomplete(7) -- address resolution is being  -- performed.  }  MAX-ACCESS read-only  STATUS current  DESCRIPTION  "The Neighbor Unreachability Detection state for the  interface when the address mapping in this entry is used.  If Neighbor Unreachability Detection is not in use (e.g. for  IPv4), this object is always unknown(6)."  REFERENCE "RFC 2461"
+----------------------------------------
+OID: 1.3.6.1.2.1.4.35.1.8
+Name: N/A
+Description: ipNetToPhysicalRowStatus OBJECT-TYPE  SYNTAX RowStatus  MAX-ACCESS read-create  STATUS current  DESCRIPTION  "The status of this conceptual row.  The RowStatus TC requires that this DESCRIPTION clause  states under which circumstances other objects in this row  can be modified. The value of this object has no effect on  whether other objects in this conceptual row can be  modified.  A conceptual row can not be made active until the  ipNetToPhysicalPhysAddress object has been set.  Note that if the ipNetToPhysicalType is set to 'invalid',  the managed node may delete the entry independent of the  state of this object."
+----------------------------------------
+OID: 1.3.6.1.2.1.11.1
+Name: snmpInPkts(1)
+Description: snmpInPkts OBJECT-TYPE  SYNTAX Counter32  MAX-ACCESS read-only  STATUS current  DESCRIPTION  "The total number of messages delivered to the SNMP entity from the transport service."
+----------------------------------------
+OID: 1.3.6.1.2.1.11.2
+Name: snmpOutPkts(2)
+Description: snmpOutPkts OBJECT-TYPE  SYNTAX Counter32  MAX-ACCESS read-only  STATUS obsolete  DESCRIPTION  "The total number of SNMP Messages which were  passed from the SNMP protocol entity to the  transport service."
+----------------------------------------
+OID: 1.3.6.1.2.1.11.3
+Name: snmpInBadVersions(3)
+Description: snmpInBadVersions OBJECT-TYPE  SYNTAX Counter32  MAX-ACCESS read-only  STATUS current  DESCRIPTION  "The total number of SNMP messages which were delivered  to the SNMP entity and were for an unsupported SNMP  version."
+----------------------------------------
+OID: 1.3.6.1.2.1.11.4
+Name: N/A
+Description: snmpInBadCommunityNames OBJECT-TYPE  SYNTAX Counter32  MAX-ACCESS read-only  STATUS current  DESCRIPTION  "The total number of community-based SNMP messages (for  example, SNMPv1) delivered to the SNMP entity which  used an SNMP community name not known to said entity.  Also, implementations which authenticate community-based  SNMP messages using check(s) in addition to matching  the community name (for example, by also checking  whether the message originated from a transport address  allowed to use a specified community name) MAY include  in this value the number of messages which failed the  additional check(s). It is strongly RECOMMENDED that  the documentation for any security model which is used  to authenticate community-based SNMP messages specify  the precise conditions that contribute to this value."
+----------------------------------------
+OID: 1.3.6.1.2.1.11.5
+Name: N/A
+Description: snmpInBadCommunityUses OBJECT-TYPE  SYNTAX Counter32  MAX-ACCESS read-only  STATUS current  DESCRIPTION  "The total number of community-based SNMP messages (for  example, SNMPv1) delivered to the SNMP entity which  represented an SNMP operation that was not allowed for  the SNMP community named in the message. The precise  conditions under which this counter is incremented  (if at all) depend on how the SNMP entity implements  its access control mechanism and how its applications  interact with that access control mechanism. It is  strongly RECOMMENDED that the documentation for any  access control mechanism which is used to control access  to and visibility of MIB instrumentation specify the  precise conditions that contribute to this value."
+----------------------------------------
+OID: 1.3.6.1.2.1.11.6
+Name: snmpInASNParseErrs(6)
+Description: snmpInASNParseErrs OBJECT-TYPE  SYNTAX Counter32  MAX-ACCESS read-only  STATUS current  DESCRIPTION  "The total number of ASN.1 or BER errors encountered by  the SNMP entity when decoding received SNMP messages."
+----------------------------------------
+OID: 1.3.6.1.2.1.11.8
+Name: snmpInTooBigs(8)
+Description: snmpInTooBigs OBJECT-TYPE  SYNTAX Counter32  MAX-ACCESS read-only  STATUS obsolete  DESCRIPTION  "The total number of SNMP PDUs which were  delivered to the SNMP protocol entity and for  which the value of the error-status field was  `tooBig'."
+----------------------------------------
+OID: 1.3.6.1.2.1.11.9
+Name: snmpInNoSuchNames(9)
+Description: snmpInNoSuchNames OBJECT-TYPE  SYNTAX Counter32  MAX-ACCESS read-only  STATUS obsolete  DESCRIPTION  "The total number of SNMP PDUs which were  delivered to the SNMP protocol entity and for  which the value of the error-status field was  `noSuchName'."
+----------------------------------------
+OID: 1.3.6.1.2.1.11.10
+Name: snmpInBadValues(10)
+Description: snmpInBadValues OBJECT-TYPE  SYNTAX Counter32  MAX-ACCESS read-only  STATUS obsolete  DESCRIPTION  "The total number of SNMP PDUs which were  delivered to the SNMP protocol entity and for  which the value of the error-status field was  `badValue'."
+----------------------------------------
+OID: 1.3.6.1.2.1.11.11
+Name: snmpInReadOnlys(11)
+Description: snmpInReadOnlys OBJECT-TYPE  SYNTAX Counter32  MAX-ACCESS read-only  STATUS obsolete  DESCRIPTION  "The total number valid SNMP PDUs which were delivered  to the SNMP protocol entity and for which the value  of the error-status field was `readOnly'. It should  be noted that it is a protocol error to generate an  SNMP PDU which contains the value `readOnly' in the  error-status field, as such this object is provided  as a means of detecting incorrect implementations of  the SNMP."
+----------------------------------------
+OID: 1.3.6.1.2.1.11.12
+Name: snmpInGenErrs(12)
+Description: snmpInGenErrs OBJECT-TYPE  SYNTAX Counter32  MAX-ACCESS read-only  STATUS obsolete  DESCRIPTION  "The total number of SNMP PDUs which were delivered  to the SNMP protocol entity and for which the value  of the error-status field was `genErr'."
+----------------------------------------
+OID: 1.3.6.1.2.1.11.13
+Name: snmpInTotalReqVars(13)
+Description: snmpInTotalReqVars OBJECT-TYPE  SYNTAX Counter32  MAX-ACCESS read-only  STATUS obsolete  DESCRIPTION  "The total number of MIB objects which have been  retrieved successfully by the SNMP protocol entity  as the result of receiving valid SNMP Get-Request  and Get-Next PDUs."
+----------------------------------------
+OID: 1.3.6.1.2.1.11.14
+Name: snmpInTotalSetVars(14)
+Description: snmpInTotalSetVars OBJECT-TYPE  SYNTAX Counter32  MAX-ACCESS read-only  STATUS obsolete  DESCRIPTION  "The total number of MIB objects which have been  altered successfully by the SNMP protocol entity as  the result of receiving valid SNMP Set-Request PDUs."
+----------------------------------------
+OID: 1.3.6.1.2.1.11.15
+Name: snmpInGetRequests(15)
+Description: snmpInGetRequests OBJECT-TYPE  SYNTAX Counter32  MAX-ACCESS read-only  STATUS obsolete  DESCRIPTION  "The total number of SNMP Get-Request PDUs which  have been accepted and processed by the SNMP  protocol entity."
+----------------------------------------
+OID: 1.3.6.1.2.1.11.16
+Name: snmpInGetNexts(16)
+Description: snmpInGetNexts OBJECT-TYPE  SYNTAX Counter32  MAX-ACCESS read-only  STATUS obsolete  DESCRIPTION  "The total number of SNMP Get-Next PDUs which have been  accepted and processed by the SNMP protocol entity."
+----------------------------------------
+OID: 1.3.6.1.2.1.11.17
+Name: snmpInSetRequests(17)
+Description: snmpInSetRequests OBJECT-TYPE  SYNTAX Counter32  MAX-ACCESS read-only  STATUS obsolete  DESCRIPTION  "The total number of SNMP Set-Request PDUs which  have been accepted and processed by the SNMP protocol  entity."
+----------------------------------------
+OID: 1.3.6.1.2.1.11.18
+Name: snmpInGetResponses(18)
+Description: snmpInGetResponses OBJECT-TYPE  SYNTAX Counter32  MAX-ACCESS read-only  STATUS obsolete  DESCRIPTION  "The total number of SNMP Get-Response PDUs which  have been accepted and processed by the SNMP protocol  entity."
+----------------------------------------
+OID: 1.3.6.1.2.1.11.19
+Name: snmpInTraps(19)
+Description: snmpInTraps OBJECT-TYPE  SYNTAX Counter32  MAX-ACCESS read-only  STATUS obsolete  DESCRIPTION  "The total number of SNMP Trap PDUs which have been  accepted and processed by the SNMP protocol entity."
+----------------------------------------
+OID: 1.3.6.1.2.1.11.20
+Name: snmpOutTooBigs(20)
+Description: snmpOutTooBigs OBJECT-TYPE  SYNTAX Counter32  MAX-ACCESS read-only  STATUS obsolete  DESCRIPTION  "The total number of SNMP PDUs which were generated  by the SNMP protocol entity and for which the value  of the error-status field was `tooBig.'"
+----------------------------------------
+OID: 1.3.6.1.2.1.11.21
+Name: snmpOutNoSuchNames(21)
+Description: snmpOutNoSuchNames OBJECT-TYPE  SYNTAX Counter32  MAX-ACCESS read-only  STATUS obsolete  DESCRIPTION  "The total number of SNMP PDUs which were generated  by the SNMP protocol entity and for which the value  of the error-status was `noSuchName'."
+----------------------------------------
+OID: 1.3.6.1.2.1.11.22
+Name: snmpOutBadValues(22)
+Description: snmpOutBadValues OBJECT-TYPE  SYNTAX Counter32  MAX-ACCESS read-only  STATUS obsolete  DESCRIPTION  "The total number of SNMP PDUs which were generated  by the SNMP protocol entity and for which the value  of the error-status field was `badValue'."
+----------------------------------------
+OID: 1.3.6.1.2.1.11.24
+Name: snmpOutGenErrs(24)
+Description: snmpOutGenErrs OBJECT-TYPE  SYNTAX Counter32  MAX-ACCESS read-only  STATUS obsolete  DESCRIPTION  "The total number of SNMP PDUs which were generated  by the SNMP protocol entity and for which the value  of the error-status field was `genErr'."
+----------------------------------------
+OID: 1.3.6.1.2.1.11.25
+Name: snmpOutGetRequests(25)
+Description: snmpOutGetRequests OBJECT-TYPE  SYNTAX Counter32  MAX-ACCESS read-only  STATUS obsolete  DESCRIPTION  "The total number of SNMP Get-Request PDUs which  have been generated by the SNMP protocol entity."
+----------------------------------------
+OID: 1.3.6.1.2.1.11.26
+Name: snmpOutGetNexts(26)
+Description: snmpOutGetNexts OBJECT-TYPE  SYNTAX Counter32  MAX-ACCESS read-only  STATUS obsolete  DESCRIPTION  "The total number of SNMP Get-Next PDUs which have  been generated by the SNMP protocol entity."
+----------------------------------------
+OID: 1.3.6.1.2.1.11.27
+Name: snmpOutSetRequests(27)
+Description: snmpOutSetRequests OBJECT-TYPE  SYNTAX Counter32  MAX-ACCESS read-only  STATUS obsolete  DESCRIPTION  "The total number of SNMP Set-Request PDUs which  have been generated by the SNMP protocol entity."
+----------------------------------------
+OID: 1.3.6.1.2.1.11.28
+Name: snmpOutGetResponses(28)
+Description: snmpOutGetResponses OBJECT-TYPE  SYNTAX Counter32  MAX-ACCESS read-only  STATUS obsolete  DESCRIPTION  "The total number of SNMP Get-Response PDUs which  have been generated by the SNMP protocol entity."
+----------------------------------------
+OID: 1.3.6.1.2.1.11.29
+Name: snmpOutTraps(29)
+Description: snmpOutTraps OBJECT-TYPE  SYNTAX Counter32  MAX-ACCESS read-only  STATUS obsolete  DESCRIPTION  "The total number of SNMP Trap PDUs which have  been generated by the SNMP protocol entity."
+----------------------------------------
+OID: 1.3.6.1.2.1.11.30
+Name: N/A
+Description: snmpEnableAuthenTraps OBJECT-TYPE  SYNTAX INTEGER {enabled(1), disabled(2)}  MAX-ACCESS read-write  STATUS current  DESCRIPTION  "Indicates whether the SNMP entity is permitted to generate authenticationFailure traps. The value of this object overrides any configuration information; as such, it provides a means whereby all authenticationFailure traps may be disabled.  Note that it is strongly recommended that this object be stored in non-volatile memory so that it remains constant across re-initializations of the network management system."
+----------------------------------------
+OID: 1.3.6.1.2.1.11.31
+Name: snmpSilentDrops(31)
+Description: snmpSilentDrops OBJECT-TYPE  SYNTAX Counter32  MAX-ACCESS read-only  STATUS current  DESCRIPTION  "The total number of Confirmed Class PDUs (such as  GetRequest-PDUs, GetNextRequest-PDUs,  GetBulkRequest-PDUs, SetRequest-PDUs, and  InformRequest-PDUs) delivered to the SNMP entity which  were silently dropped because the size of a reply  containing an alternate Response Class PDU (such as a  Response-PDU) with an empty variable-bindings field  was greater than either a local constraint or the  maximum message size associated with the originator of  the request."
+----------------------------------------
+OID: 1.3.6.1.2.1.11.32
+Name: snmpProxyDrops(32)
+Description: snmpProxyDrops OBJECT-TYPE  SYNTAX Counter32  MAX-ACCESS read-only  STATUS current  DESCRIPTION  "The total number of Confirmed Class PDUs  (such as GetRequest-PDUs, GetNextRequest-PDUs,  GetBulkRequest-PDUs, SetRequest-PDUs, and  InformRequest-PDUs) delivered to the SNMP entity which  were silently dropped because the transmission of  the (possibly translated) message to a proxy target  failed in a manner (other than a time-out) such that  no Response Class PDU (such as a Response-PDU) could  be returned."
+----------------------------------------
+OID: 1.3.6.1.2.1.31.1.1.1.1
+Name: ifName(1)
+Description: ifName OBJECT-TYPE  SYNTAX DisplayString  MAX-ACCESS read-only  STATUS current  DESCRIPTION  "The textual name of the interface. The value of this  object should be the name of the interface as assigned by  the local device and should be suitable for use in commands  entered at the device's `console'. This might be a text  name, such as `le0' or a simple port number, such as `1',  depending on the interface naming syntax of the device. If  several entries in the ifTable together represent a single  interface as named by the device, then each will have the  same value of ifName. Note that for an agent which responds  to SNMP queries concerning an interface on some other  (proxied) device, then the value of ifName for such an  interface is the proxied device's local name for it.  If there is no local name, or this object is otherwise not  applicable, then this object contains a zero-length string."
+----------------------------------------
+OID: 1.3.6.1.2.1.31.1.1.1.2
+Name: ifInMulticastPkts(2)
+Description: ifInMulticastPkts OBJECT-TYPE  SYNTAX Counter32  MAX-ACCESS read-only  STATUS current  DESCRIPTION  "The number of packets, delivered by this sub-layer to a  higher (sub-)layer, which were addressed to a multicast  address at this sub-layer. For a MAC layer protocol, this  includes both Group and Functional addresses.  Discontinuities in the value of this counter can occur at  re-initialization of the management system, and at other  times as indicated by the value of  ifCounterDiscontinuityTime."
+----------------------------------------
+OID: 1.3.6.1.2.1.31.1.1.1.3
+Name: ifInBroadcastPkts(3)
+Description: ifInBroadcastPkts OBJECT-TYPE  SYNTAX Counter32  MAX-ACCESS read-only  STATUS current  DESCRIPTION  "The number of packets, delivered by this sub-layer to a  higher (sub-)layer, which were addressed to a broadcast  address at this sub-layer.  Discontinuities in the value of this counter can occur at  re-initialization of the management system, and at other  times as indicated by the value of  ifCounterDiscontinuityTime."
+----------------------------------------
+OID: 1.3.6.1.2.1.31.1.1.1.4
+Name: ifOutMulticastPkts(4)
+Description: ifOutMulticastPkts OBJECT-TYPE  SYNTAX Counter32  MAX-ACCESS read-only  STATUS current  DESCRIPTION  "The total number of packets that higher-level protocols  requested be transmitted, and which were addressed to a  multicast address at this sub-layer, including those that  were discarded or not sent. For a MAC layer protocol, this  includes both Group and Functional addresses.  Discontinuities in the value of this counter can occur at  re-initialization of the management system, and at other  times as indicated by the value of  ifCounterDiscontinuityTime."
+----------------------------------------
+OID: 1.3.6.1.2.1.31.1.1.1.5
+Name: ifOutBroadcastPkts(5)
+Description: ifOutBroadcastPkts OBJECT-TYPE  SYNTAX Counter32  MAX-ACCESS read-only  STATUS current  DESCRIPTION  "The total number of packets that higher-level protocols  requested be transmitted, and which were addressed to a  broadcast address at this sub-layer, including those that  were discarded or not sent.  Discontinuities in the value of this counter can occur at  re-initialization of the management system, and at other  times as indicated by the value of  ifCounterDiscontinuityTime."
+----------------------------------------
+OID: 1.3.6.1.2.1.31.1.1.1.6
+Name: ifHCInOctets(6)
+Description: ifHCInOctets OBJECT-TYPE  SYNTAX Counter64  MAX-ACCESS read-only  STATUS current  DESCRIPTION  "The total number of octets received on the interface,  including framing characters. This object is a 64-bit  version of ifInOctets.  Discontinuities in the value of this counter can occur at  re-initialization of the management system, and at other  times as indicated by the value of  ifCounterDiscontinuityTime."
+----------------------------------------
+OID: 1.3.6.1.2.1.31.1.1.1.7
+Name: ifHCInUcastPkts(7)
+Description: ifHCInUcastPkts OBJECT-TYPE  SYNTAX Counter64  MAX-ACCESS read-only  STATUS current  DESCRIPTION  "The number of packets, delivered by this sub-layer to a  higher (sub-)layer, which were not addressed to a multicast  or broadcast address at this sub-layer. This object is a  64-bit version of ifInUcastPkts.  Discontinuities in the value of this counter can occur at  re-initialization of the management system, and at other  times as indicated by the value of  ifCounterDiscontinuityTime."
+----------------------------------------
+OID: 1.3.6.1.2.1.31.1.1.1.8
+Name: ifHCInMulticastPkts(8)
+Description: ifHCInMulticastPkts OBJECT-TYPE  SYNTAX Counter64  MAX-ACCESS read-only  STATUS current  DESCRIPTION  "The number of packets, delivered by this sub-layer to a  higher (sub-)layer, which were addressed to a multicast  address at this sub-layer. For a MAC layer protocol, this  includes both Group and Functional addresses. This object  is a 64-bit version of ifInMulticastPkts.  Discontinuities in the value of this counter can occur at  re-initialization of the management system, and at other  times as indicated by the value of  ifCounterDiscontinuityTime."
+----------------------------------------
+OID: 1.3.6.1.2.1.31.1.1.1.9
+Name: ifHCInBroadcastPkts(9)
+Description: ifHCInBroadcastPkts OBJECT-TYPE  SYNTAX Counter64  MAX-ACCESS read-only  STATUS current  DESCRIPTION  "The number of packets, delivered by this sub-layer to a  higher (sub-)layer, which were addressed to a broadcast  address at this sub-layer. This object is a 64-bit version  of ifInBroadcastPkts.  Discontinuities in the value of this counter can occur at  re-initialization of the management system, and at other  times as indicated by the value of  ifCounterDiscontinuityTime."
+----------------------------------------
+OID: 1.3.6.1.2.1.31.1.1.1.10
+Name: ifHCOutOctets(10)
+Description: ifHCOutOctets OBJECT-TYPE  SYNTAX Counter64  MAX-ACCESS read-only  STATUS current  DESCRIPTION  "The total number of octets transmitted out of the  interface, including framing characters. This object is a  64-bit version of ifOutOctets.  Discontinuities in the value of this counter can occur at  re-initialization of the management system, and at other  times as indicated by the value of  ifCounterDiscontinuityTime."
+----------------------------------------
+OID: 1.3.6.1.2.1.31.1.1.1.11
+Name: ifHCOutUcastPkts(11)
+Description: ifHCOutUcastPkts OBJECT-TYPE  SYNTAX Counter64  MAX-ACCESS read-only  STATUS current  DESCRIPTION  "The total number of packets that higher-level protocols  requested be transmitted, and which were not addressed to a  multicast or broadcast address at this sub-layer, including  those that were discarded or not sent. This object is a  64-bit version of ifOutUcastPkts.  Discontinuities in the value of this counter can occur at  re-initialization of the management system, and at other  times as indicated by the value of  ifCounterDiscontinuityTime."
+----------------------------------------
+OID: 1.3.6.1.2.1.31.1.1.1.12
+Name: ifHCOutMulticastPkts(12)
+Description: ifHCOutMulticastPkts OBJECT-TYPE  SYNTAX Counter64  MAX-ACCESS read-only  STATUS current  DESCRIPTION  "The total number of packets that higher-level protocols  requested be transmitted, and which were addressed to a  multicast address at this sub-layer, including those that  were discarded or not sent. For a MAC layer protocol, this  includes both Group and Functional addresses. This object  is a 64-bit version of ifOutMulticastPkts.  Discontinuities in the value of this counter can occur at  re-initialization of the management system, and at other  times as indicated by the value of  ifCounterDiscontinuityTime."
+----------------------------------------
+OID: 1.3.6.1.2.1.31.1.1.1.13
+Name: ifHCOutBroadcastPkts(13)
+Description: ifHCOutBroadcastPkts OBJECT-TYPE  SYNTAX Counter64  MAX-ACCESS read-only  STATUS current  DESCRIPTION  "The total number of packets that higher-level protocols  requested be transmitted, and which were addressed to a  broadcast address at this sub-layer, including those that  were discarded or not sent. This object is a 64-bit version  of ifOutBroadcastPkts.  Discontinuities in the value of this counter can occur at  re-initialization of the management system, and at other  times as indicated by the value of  ifCounterDiscontinuityTime."
+----------------------------------------
+OID: 1.3.6.1.2.1.31.1.1.1.14
+Name: N/A
+Description: ifLinkUpDownTrapEnable OBJECT-TYPE  SYNTAX INTEGER { enabled(1), disabled(2) }  MAX-ACCESS read-write  STATUS current  DESCRIPTION  "Indicates whether linkUp/linkDown traps should be generated  for this interface.  By default, this object should have the value enabled(1) for  interfaces which do not operate on 'top' of any other  interface (as defined in the ifStackTable), and disabled(2)  otherwise."
+----------------------------------------
+OID: 1.3.6.1.2.1.31.1.1.1.15
+Name: ifHighSpeed(15)
+Description: ifHighSpeed OBJECT-TYPE  SYNTAX Gauge32  MAX-ACCESS read-only  STATUS current  DESCRIPTION  "An estimate of the interface's current bandwidth in units  of 1,000,000 bits per second. If this object reports a  value of `n' then the speed of the interface is somewhere in  the range of `n-500,000' to `n+499,999'. For interfaces  which do not vary in bandwidth or for those where no  accurate estimation can be made, this object should contain  the nominal bandwidth. For a sub-layer which has no concept  of bandwidth, this object should be zero."
+----------------------------------------
+OID: 1.3.6.1.2.1.31.1.1.1.16
+Name: ifPromiscuousMode(16)
+Description: ifPromiscuousMode OBJECT-TYPE  SYNTAX TruthValue  MAX-ACCESS read-write  STATUS current  DESCRIPTION  "This object has a value of false(2) if this interface only  accepts packets/frames that are addressed to this station.  This object has a value of true(1) when the station accepts  all packets/frames transmitted on the media. The value  true(1) is only legal on certain types of media. If legal,  setting this object to a value of true(1) may require the  interface to be reset before becoming effective.  The value of ifPromiscuousMode does not affect the reception  of broadcast and multicast packets/frames by the interface."
+----------------------------------------
+OID: 1.3.6.1.2.1.31.1.1.1.17
+Name: ifConnectorPresent(17)
+Description: ifConnectorPresent OBJECT-TYPE  SYNTAX TruthValue  MAX-ACCESS read-only  STATUS current  DESCRIPTION  "This object has the value 'true(1)' if the interface  sublayer has a physical connector and the value 'false(2)'  otherwise."
+----------------------------------------
+OID: 1.3.6.1.2.1.31.1.1.1.18
+Name: ifAlias(18)
+Description: ifAlias OBJECT-TYPE  SYNTAX DisplayString (SIZE(0..64))  MAX-ACCESS read-write  STATUS current  DESCRIPTION  "This object is an 'alias' name for the interface as specified by a network manager, and provides a non-volatile 'handle' for the interface.  On the first instantiation of an interface, the value of ifAlias associated with that interface is the zero-length string. As and when a value is written into an instance of ifAlias through a network management set operation, then the agent must retain the supplied value in the ifAlias instance associated with the same interface for as long as that interface remains instantiated, including across all re-initializations/reboots of the network management system, including those which result in a change of the interface's ifIndex value.  An example of the value which a network manager might store in this object for a WAN interface is the (Telco's) circuit number/identifier of the interface.  Some agents may support write-access only for interfaces having particular values of ifType. An agent which supports write access to this object is required to keep the value in non-volatile storage, but it may limit the length of new values depending on how much storage is already occupied by the current values for other interfaces."
+----------------------------------------
+OID: 1.3.6.1.2.1.31.1.1.1.19
+Name: N/A
+Description: ifCounterDiscontinuityTime OBJECT-TYPE  SYNTAX TimeStamp  MAX-ACCESS read-only  STATUS current  DESCRIPTION  "The value of sysUpTime on the most recent occasion at which  any one or more of this interface's counters suffered a  discontinuity. The relevant counters are the specific  instances associated with this interface of any Counter32 or  Counter64 object contained in the ifTable or ifXTable. If  no such discontinuities have occurred since the last re-  initialization of the local management subsystem, then this  object contains a zero value."
+----------------------------------------
+OID: 1.3.6.1.2.1.88.1.1.1
+Name: N/A
+Description: mteResourceSampleMinimum OBJECT-TYPE  SYNTAX Integer32 (1..2147483647)  UNITS "seconds"  MAX-ACCESS read-write  STATUS current  DESCRIPTION  "The minimum mteTriggerFrequency this system will  accept. A system may use the larger values of this minimum to  lessen the impact of constant sampling. For larger  sampling intervals the system samples less often and  suffers less overhead. This object provides a way to enforce  such lower overhead for all triggers created after it is  set.  Unless explicitly resource limited, a system's value for  this object SHOULD be 1, allowing as small as a 1 second  interval for ongoing trigger sampling.  Changing this value will not invalidate an existing setting  of mteTriggerFrequency."
+----------------------------------------
+OID: 1.3.6.1.2.1.88.1.1.2
+Name: N/A
+Description: mteResourceSampleInstanceMaximum OBJECT-TYPE  SYNTAX Unsigned32  UNITS "instances"  MAX-ACCESS read-write  STATUS current  DESCRIPTION  "The maximum number of instance entries this system will  support for sampling.  These are the entries that maintain state, one for each  instance of each sampled object as selected by  mteTriggerValueID. Note that wildcarded objects result  in multiple instances of this state.  A value of 0 indicates no preset limit, that is, the limit  is dynamic based on system operation and resources.  Unless explicitly resource limited, a system's value for  this object SHOULD be 0.  Changing this value will not eliminate or inhibit existing  sample state but could prevent allocation of additional state  information."
+----------------------------------------
+OID: 1.3.6.1.2.1.88.1.1.3
+Name: N/A
+Description: mteResourceSampleInstances OBJECT-TYPE  SYNTAX Gauge32  UNITS "instances"  MAX-ACCESS read-only  STATUS current  DESCRIPTION  "The number of currently active instance entries as  defined for mteResourceSampleInstanceMaximum."
+----------------------------------------
+OID: 1.3.6.1.2.1.88.1.1.4
+Name: N/A
+Description: mteResourceSampleInstancesHigh OBJECT-TYPE  SYNTAX Gauge32  UNITS "instances"  MAX-ACCESS read-only  STATUS current  DESCRIPTION  "The highest value of mteResourceSampleInstances that has  occurred since initialization of the management system."
+----------------------------------------
+OID: 1.3.6.1.2.1.88.1.1.5
+Name: N/A
+Description: mteResourceSampleInstanceLacks OBJECT-TYPE  SYNTAX Counter32  UNITS "instances"  MAX-ACCESS read-only  STATUS current  DESCRIPTION  "The number of times this system could not take a new sample  because that allocation would have exceeded the limit set by  mteResourceSampleInstanceMaximum."
+----------------------------------------
+OID: 1.3.6.1.2.1.88.1.2.1
+Name: mteTriggerFailures(1)
+Description: mteTriggerFailures OBJECT-TYPE  SYNTAX Counter32  UNITS "failures"  MAX-ACCESS read-only  STATUS current  DESCRIPTION  "The number of times an attempt to check for a trigger  condition has failed. This counts individually for each  attempt in a group of targets or each attempt for a  wildcarded object."
+----------------------------------------
+OID: 1.3.6.1.2.1.88.1.4.1
+Name: mteEventFailures(1)
+Description: mteEventFailures OBJECT-TYPE  SYNTAX Counter32  MAX-ACCESS read-only  STATUS current  DESCRIPTION  "The number of times an attempt to invoke an event  has failed. This counts individually for each  attempt in a group of targets or each attempt for a  wildcarded trigger object."
+----------------------------------------
+OID: 1.3.6.1.2.1.123.1.4.1.2
+Name: natAddrMapName(2)
+Description: natAddrMapName OBJECT-TYPE  SYNTAX SnmpAdminString (SIZE(1..32))  MAX-ACCESS read-create  STATUS deprecated  DESCRIPTION  "Name identifying all map entries in the table associated  with the same interface. All map entries with the same  ifIndex MUST have the same map name.  Deprecated in favor of NATV2-MIB."  REFERENCE "RFC 7658, RFC 7659"
+----------------------------------------
+OID: 1.3.6.1.2.1.123.1.4.1.10
+Name: N/A
+Description: natAddrMapGlobalAddrType OBJECT-TYPE  SYNTAX InetAddressType  MAX-ACCESS read-create  STATUS deprecated  DESCRIPTION  "This object specifies the address type used for  natAddrMapGlobalAddrFrom and natAddrMapGlobalAddrTo.  Deprecated in favor of NATV2-MIB."  REFERENCE "RFC 7658, RFC 7659"
+----------------------------------------
+OID: 1.3.6.1.2.1.123.1.4.1.11
+Name: N/A
+Description: natAddrMapGlobalAddrFrom OBJECT-TYPE  SYNTAX InetAddress  MAX-ACCESS read-create  STATUS deprecated  DESCRIPTION  "This object specifies the first IP address of the range  of IP addresses being mapped to. The value of this  object must be less than or equal to the value of the  natAddrMapGlobalAddrTo object.  The type of this address is determined by the value of  the natAddrMapGlobalAddrType object.  Deprecated in favor of NATV2-MIB."  REFERENCE "RFC 7658, RFC 7659"
+----------------------------------------
+OID: 1.3.6.1.2.1.123.1.4.1.12
+Name: N/A
+Description: natAddrMapGlobalAddrTo OBJECT-TYPE  SYNTAX InetAddress  MAX-ACCESS read-create  STATUS deprecated  DESCRIPTION  "This object specifies the last IP address of the range  of IP addresses being mapped to. If only a single  address is being mapped to, the value of this object is  equal to the value of natAddrMapGlobalAddrFrom. For a  static NAT, the number of addresses in the range defined  by natAddrMapGlobalAddrFrom and natAddrMapGlobalAddrTo  must be equal to the number of addresses in the range  defined by natAddrMapLocalAddrFrom and  natAddrMapLocalAddrTo. The value of this object must be  greater than or equal to the value of the  natAddrMapGlobalAddrFrom object.  The type of this address is determined by the value of  the natAddrMapGlobalAddrType object.  Deprecated in favor of NATV2-MIB."  REFERENCE "RFC 7658, RFC 7659"
+----------------------------------------
+OID: 1.3.6.1.2.1.123.1.4.1.13
+Name: N/A
+Description: natAddrMapGlobalPortFrom OBJECT-TYPE  SYNTAX InetPortNumber  MAX-ACCESS read-create  STATUS deprecated  DESCRIPTION  "If this conceptual row describes a Basic NAT address  mapping, then the value of this object must be zero. If  this conceptual row describes NAPT, then the value of  this object specifies the first port number in the range  of ports being mapped to.  The value of this object must be less than or equal to  the value of the natAddrMapGlobalPortTo object. If the  translation specifies a single port, then the value of  this object is equal to the value  natAddrMapGlobalPortTo.  Deprecated in favor of NATV2-MIB."  REFERENCE "RFC 7658, RFC 7659"  DEFVAL { 0 }
+----------------------------------------
+OID: 1.3.6.1.2.1.123.1.4.1.14
+Name: N/A
+Description: natAddrMapGlobalPortTo OBJECT-TYPE  SYNTAX InetPortNumber  MAX-ACCESS read-create  STATUS deprecated  DESCRIPTION  "If this conceptual row describes a Basic NAT address  mapping, then the value of this object must be zero. If  this conceptual row describes NAPT, then the value of  this object specifies the last port number in the range  of ports being mapped to.  The value of this object must be greater than or equal  to the value of the natAddrMapGlobalPortFrom object. If  the translation specifies a single port, then the value  of this object is equal to the value of  natAddrMapGlobalPortFrom.  Deprecated in favor of NATV2-MIB."  REFERENCE "RFC 7658, RFC 7659"  DEFVAL { 0 }
+----------------------------------------
+OID: 1.3.6.1.2.1.123.1.4.1.15
+Name: natAddrMapProtocol(15)
+Description: natAddrMapProtocol OBJECT-TYPE  SYNTAX NatProtocolMap  MAX-ACCESS read-create  STATUS deprecated  DESCRIPTION  "This object specifies a bitmap of protocol identifiers.  Deprecated in favor of NATV2-MIB."  REFERENCE "RFC 7658, RFC 7659"
+----------------------------------------
+OID: 1.3.6.1.2.1.123.1.4.1.19
+Name: natAddrMapAddrUsed(19)
+Description: natAddrMapAddrUsed OBJECT-TYPE  SYNTAX Gauge32  MAX-ACCESS read-only  STATUS deprecated  DESCRIPTION  "The number of addresses pertaining to this address map  that are currently being used from the NAT pool.  The value of this object must always be zero in the case  of a static address map.  Deprecated in favor of NATV2-MIB."  REFERENCE "RFC 7658, RFC 7659"
+----------------------------------------
