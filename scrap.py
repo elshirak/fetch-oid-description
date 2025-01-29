@@ -50,7 +50,7 @@ def main():
         print(f"Description: {description}")
         print("-" * 40)
         
-        time.sleep(10)
+        time.sleep(10) # to avoid 429 too many requests error
 
 if __name__ == "__main__":
     main()
