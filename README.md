@@ -14,7 +14,7 @@ Additionally, I faced a significant challenge: I couldn’t find a single resour
 To address this problem and make my life easier, I wrote a web scraper that takes a file containing OIDs as input and generates a text document with detailed information about each specific OID. It does this using the `requests` and `BeautifulSoup` libraries, scraping the necessary data from the website `oid-base.com` by extracting information from relevant tags. While it’s far from perfect and may stop working if the website updates, for now, it serves its purpose.
 
 Other resources that helped me understand SNMP:
-- Hvala and many thanks to @haad https://github.com/haad for https://gist.github.com/haad/4237509
+- Hvala and many thanks to [@haad](https://github.com/haad) for https://gist.github.com/haad/4237509
 - https://www.cisco.com/c/en/us/td/docs/security/asa/asa84/configuration/guide/asa_84_cli_config/monitor_snmp.html#70428
 - https://snmp.cloudapps.cisco.com/Support/SNMP/do/BrowseOID.do?local=en  -- you need to login
 - https://www.rfc-editor.org/rfc/rfc1157
